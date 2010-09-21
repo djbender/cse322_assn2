@@ -1,0 +1,41 @@
+Start Tag: <track>
+Start Attribute: <-
+Attribute: name
+Assignment: =
+String: "flashbulb"
+End Attribute: ->
+Start Tag: <piece>
+Start Attribute: <-
+Attribute: shape
+Assignment: =
+String: "straight"
+End Attribute: ->
+Start Attribute: <-
+Attribute: size
+Assignment: =
+Number: "6"
+End Attribute: ->
+Start Attribute: <-
+Attribute: quantity
+Assignment: =
+Number: "3"
+End Attribute: ->
+Start Attribute: <-
+Attribute: cost
+Assignment: =
+Number: "8"
+End Attribute: ->
+Start Tag: <station>
+Start Attribute: <-
+Attribute: kind
+Assignment: =
+String: "fire"
+End Attribute: ->
+Start Attribute: <-
+Attribute: location
+Assignment: =
+Number: "4"
+End Attribute: ->
+End Tag: </station>
+End Tag: </piece>
+End Tag: </track>
