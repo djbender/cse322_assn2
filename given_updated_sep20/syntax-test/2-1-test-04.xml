@@ -1,0 +1,10 @@
+<track>
+	<- name = "sequoia" ->
+	<piece>
+		<- cost = "400" ->
+		<- quantity = "6" ->
+		<- shape = "junction" ->
+		<- size = "1" ->
+		<- material = "wood" ->
+	</piece>
+</track>

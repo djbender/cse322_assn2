@@ -1,0 +1,21 @@
+<track>
+	<- name = "juniorjack" ->
+	<piece>
+		<- shape = "straight" ->
+		<- quantity = "1" ->
+		<- size = "8" ->
+		<- cost = "60" ->
+	</piece>
+	<piece>
+		<- shape = "curve" ->
+		<- quantity = "49" ->
+		<- size = "4" ->
+		<- cost = "50" ->
+	</piece>
+	<piece>
+		<- shape = "curve" ->
+		<- quantity = "49" ->
+		<- size = "6" ->
+		<- cost = 75" ->
+	</piece>
+</track>

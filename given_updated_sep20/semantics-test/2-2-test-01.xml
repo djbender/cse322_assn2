@@ -1,0 +1,14 @@
+<track>
+	<piece>
+		<- shape = "straight" ->
+		<- size = "8" ->
+		<- cost = "80" ->
+		<- quantity = "5" ->
+	</piece>
+	<piece>
+		<- shape = "curve" ->
+		<- size = "1" ->
+		<- cost = "10" ->
+		<- quantity = "20" ->
+	</piece>
+</track>

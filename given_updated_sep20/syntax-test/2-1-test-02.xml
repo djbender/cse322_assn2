@@ -1,0 +1,13 @@
+<track>
+	<- name = "flashbulb" ->
+	<piece>
+		<- shape = "straight" ->
+		<- size = "6" ->
+		<- quantity =		"3" ->
+
+		<- cost = "8" ->
+		<station>
+			<- kind = "fire" -> <- location = "4" ->
+		</station>
+	</piece>
+</track>

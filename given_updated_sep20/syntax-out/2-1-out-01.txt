@@ -1,0 +1,7 @@
+Start Tag: <track>
+Start Attribute: <-
+Attribute: name
+Assignment: =
+String: "emptytrack"
+End Attribute: ->
+End Tag: </track>

@@ -1,0 +1,15 @@
+<track>
+	<- name = "venetiansnares" ->
+	<piece>
+		<- quantity = "4" ->
+		<- size = "3" ->
+		<- cost = "44" ->
+		<- shape = "curve" ->
+	<piece>
+		<- quantity = "6" ->
+		<- size = "8" ->
+		<- cost = "100" ->
+		<- shape = "straight" ->
+	</piece>
+	</piece>
+</track>
