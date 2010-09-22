@@ -1,5 +1,0 @@
-Start Tag: <track>
-Start Attribute: <-
-Attribute: name
-Assignment: =
-Invalid token: t

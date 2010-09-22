@@ -1,6 +1,0 @@
-Start Tag: <track>
-Start Tag: <piece>
-Start Attribute: <-
-Attribute: size
-Assignment: =
-Invalid token: "

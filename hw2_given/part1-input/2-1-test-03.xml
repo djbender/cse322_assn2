@@ -1,9 +1,0 @@
-<track>
-	<- name = tortoise ->
-	<piece>
-		<- shape = "curve" ->
-		<- size = "1" ->
-		<- quantity = "1" ->
-		<- cost = "20" ->
-	</piece>
-</track>
