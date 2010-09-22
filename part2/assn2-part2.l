@@ -11,12 +11,13 @@ void yyerror(char *);
 "<track>"	{return STRACK;}
 "</track>"	{return ETRACK;}
 
+[ \t\r\n]	                        //printf("Caught some whitespace: space\n");
+
 .												{
 												printf("Invalid token: %s\n", yytext);
 												return 0;
 												}
 
-[ \t\r\n]	                        //printf("Caught some whitespace: space\n");
 
 %%
 

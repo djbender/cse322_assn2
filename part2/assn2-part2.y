@@ -18,6 +18,6 @@ void yyerror(char *s){
 }
 
 int main( void ) {
+	yydebug=1;
 	yyparse();
-	return 0;
 }
