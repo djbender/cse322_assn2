@@ -4,35 +4,46 @@ void yyerror(char *);
 #include "y.tab.h"
 %}
 
-
-
 %%
 
-[ \t\r\n]	                        //printf("Caught some whitespace: space\n");
-"<track>"|"<piece>"|"<station>"		{
-												}
+[ \t\r\n]	   /* do nothing */ 
 
-"</track>"|"</piece>"|"</station>"	{
-												}
+"<track>"		{ECHO;return STRACK;}
+"<piece>"		{return SPIECE;}
+"<station>"		{return SSTATION;}
 
-"<-"		                        	
-"->"		                        	
+"</track>"		{ECHO;return ETRACK;}
+"</piece>"		{return EPIECE;}
+"</station>"	{return ESTATION;}
 
-name|shape|size|quantity|cost|kind|location {
-												}
+"<-"				{return SATTR;}
+"->"				{return EATTR;}
 
-=												
+"name"		{return NAME;}
+"shape"		{return SHAPE;}
+"size"		{return SIZE;}
+"quantity" 	{return QUANTITY;}
+"cost"		{return COST;}
+"kind"		{return KIND;}
+"location" 	{return LOCATION;}
 
-\"[0-9]+\"                          {
-												yylval = atoi(yytext);
-												return INTEGER;
-												}
+=				{return EQUAL;}										
 
-\"[a-zA-Z]([a-zA-Z0-9])+\"           
+[0-9]+	{
+			yylval = atoi(yytext);
+			return INTEGER;
+			}
+
+[a-zA-Z]([a-zA-Z0-9])+ 	{
+								ECHO;
+								return STRING;
+								}
+
+\"				{return Q;}
 
 .												{
 												printf("Invalid token: %s\n", yytext);
-												return 0;
+												//return 0;
 												}
 
 
@@ -41,3 +52,9 @@ name|shape|size|quantity|cost|kind|location {
 int yywrap(void){return 1;}
 
 /* Main is in yacc file */
+/*
+int main() {
+	yylex();
+	return 0;
+}
+*/
