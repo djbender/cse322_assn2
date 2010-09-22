@@ -4,9 +4,12 @@ int yylex(void);
 void yyerror(char *);
 %}
 
-%token INTEGER
+%token STRACK ETRACK
 
 %%
+
+track: STRACK ETRACK		{printf("Got a track!\n");}
+	;
 
 %%
 

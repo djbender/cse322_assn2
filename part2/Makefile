@@ -1,4 +1,4 @@
-all: lex 
+all: lex yacc 
 	cc lex.yy.c y.tab.c -o trains
 lex:
 	lex assn2-part2.l

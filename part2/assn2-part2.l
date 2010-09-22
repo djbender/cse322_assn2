@@ -8,33 +8,15 @@ void yyerror(char *);
 
 %%
 
-[ \t\r\n]	                        //printf("Caught some whitespace: space\n");
-"<track>"|"<piece>"|"<station>"		{
-												}
-
-"</track>"|"</piece>"|"</station>"	{
-												}
-
-"<-"		                        	
-"->"		                        	
-
-name|shape|size|quantity|cost|kind|location {
-												}
-
-=												
-
-\"[0-9]+\"                          {
-												yylval = atoi(yytext);
-												return INTEGER;
-												}
-
-\"[a-zA-Z]([a-zA-Z0-9])+\"           
+"<track>"	{return STRACK;}
+"</track>"	{return ETRACK;}
 
 .												{
 												printf("Invalid token: %s\n", yytext);
 												return 0;
 												}
 
+[ \t\r\n]	                        //printf("Caught some whitespace: space\n");
 
 %%
 
