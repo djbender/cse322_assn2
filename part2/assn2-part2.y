@@ -50,8 +50,20 @@ piece_attrs: piece_attr piece_attrs
 
 piece_attr:	SATTR SHAPE EQUAL string EATTR	{shape_c++;}
 	| SATTR SIZE EQUAL integer EATTR				{size_c++;}
-	| SATTR QUANTITY EQUAL integer EATTR		{quantity_c++;}
-	| SATTR COST EQUAL integer EATTR				{cost_c++;}
+	| SATTR QUANTITY EQUAL integer EATTR		{
+			if($4 < 1) {
+				yyerror("Piece's quantity must be at least 1");
+				return 0;
+			}
+			quantity_c++;
+		}
+	| SATTR COST EQUAL integer EATTR				{
+			if($4 < 1) {
+				yyerror("Piece's cost must be at least 1");
+				return 0;
+			}
+			cost_c++;
+		}
 	| station											{station_c++;}
 	;
 

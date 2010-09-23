@@ -20,8 +20,8 @@ void yyerror(char *);
 "name"		{return NAME;}
 "shape"		{return SHAPE;}
 "size"		{return SIZE;}
-"quantity" 	{return QUANTITY;}
-"cost"		{return COST;}
+"quantity" 	{yylval = atoi(yytext); return QUANTITY;}
+"cost"		{yylval = atoi(yytext); return COST;}
 "kind"		{return KIND;}
 "location" 	{return LOCATION;}
 
