@@ -1,0 +1,21 @@
+
+<track>
+	<- name = "lulz" ->
+	<piece>
+		<- shape = "curve" ->
+		<- quantity = "10" ->
+		<- size = "1" ->
+		<- cost = "3" ->
+	</piece>
+	<piece>
+		<- shape ="straight" ->
+		<- size = "3" -> <- quantity= "2"->		<- cost ="2" ->
+	</piece>
+	<piece>
+		<- shape ="straight" -> <- size = "2" -> <- quantity= "2"->
+		<- cost ="1" ->
+		<station>
+			<- kind = "police"-> <- location = "1" ->
+		</station>
+	</piece>
+</track>
