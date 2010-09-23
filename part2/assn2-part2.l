@@ -6,13 +6,11 @@ void yyerror(char *);
 
 %%
 
-[ \t\r\n]	   /* do nothing */ 
-
-"<track>"		{ECHO;return STRACK;}
+"<track>"		{return STRACK;}
 "<piece>"		{return SPIECE;}
 "<station>"		{return SSTATION;}
 
-"</track>"		{ECHO;return ETRACK;}
+"</track>"		{return ETRACK;}
 "</piece>"		{return EPIECE;}
 "</station>"	{return ESTATION;}
 
@@ -34,12 +32,11 @@ void yyerror(char *);
 			return INTEGER;
 			}
 
-[a-zA-Z]([a-zA-Z0-9])+ 	{
-								ECHO;
-								return STRING;
-								}
+[a-zA-Z]([a-zA-Z0-9])+ 	{return STRING;}
 
 \"				{return Q;}
+
+[ \t\r\n]	   /* do nothing */ 
 
 .												{
 												printf("Invalid token: %s\n", yytext);
