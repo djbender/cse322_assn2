@@ -25,6 +25,10 @@ void yyerror(char *);
 "kind"		{return KIND;}
 "location" 	{return LOCATION;}
 
+"straight" 	{return STRAIGHT;}
+"curve"		{return CURVE;}
+"junction"	{return JUNCTION;}
+
 =				{return EQUAL;}										
 
 [0-9]+	{

@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <string.h>
 int yylex(void);
 void yyerror(char *);
 
@@ -8,10 +9,11 @@ int size_c = 0;
 int quantity_c = 0;
 int cost_c = 0;
 int station_c = 0;
+char * shape = "";
 
 %}
 
-%token STRACK SPIECE SSTATION ETRACK EPIECE ESTATION SATTR EATTR NAME SHAPE SIZE QUANTITY COST KIND LOCATION EQUAL INTEGER Q STRING
+%token STRACK SPIECE SSTATION ETRACK EPIECE ESTATION SATTR EATTR NAME SHAPE SIZE QUANTITY COST STRAIGHT CURVE JUNCTION KIND LOCATION EQUAL INTEGER Q STRING
 
 %%
 
@@ -32,7 +34,7 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 				cost_c = 0;
 				station_c = 0;
 			} else { 
-				yyerror("Piece Error: ");
+				yyerror("Piece Error:");
 				if(station_c > 1) {
 					yyerror("Station is greater than 1\n");
 				} else {
@@ -44,14 +46,19 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 	|
 	;
 
-piece_attrs: piece_attr piece_attrs
+piece_attrs: piece_attr piece_attrs {
+			if( strcmp(shape, "JUNCTION") && (size_c != 1)) {
+				yyerror("Size of Junction was not one.\n");
+			}
+		}
 	|
 	;
 
-piece_attr:	SATTR SHAPE EQUAL string EATTR	{shape_c++;}
+piece_attr:	SATTR SHAPE EQUAL shape EATTR	{shape_c++;}
 	| SATTR SIZE EQUAL integer EATTR				{size_c++;}
 	| SATTR QUANTITY EQUAL integer EATTR		{
 			if($4 < 1) {
+				printf("quantity given: %i.\n", $4);
 				yyerror("Piece's quantity must be at least 1");
 				return 0;
 			}
@@ -65,6 +72,11 @@ piece_attr:	SATTR SHAPE EQUAL string EATTR	{shape_c++;}
 			cost_c++;
 		}
 	| station											{station_c++;}
+	;
+
+shape: STRAIGHT		{shape = "STRAIGHT";}
+	| CURVE				{shape = "CURVE";}
+	| JUNCTION			{shape = "JUNCTION";}
 	;
 
 station: SSTATION station_attrs ESTATION
@@ -86,14 +98,14 @@ string: Q STRING Q
 	| STRING
 	;
 
-integer: Q INTEGER Q
-	| INTEGER
+integer: Q INTEGER Q	{$$ = $2;} 
+	| INTEGER 			{$$ = $1;}
 	;
 
 %%
 
 void yyerror(char *s){
-		printf("\n Syntax Error found: %s\n", s);
+		printf("\n Syntax Error found: %i %s\n", __LINE__, s);
 }
 
 int main( void ) {
