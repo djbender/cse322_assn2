@@ -1,5 +1,15 @@
 Derek Bender
 
+Makefile included is for part 2:
+$ make
+$ make clean
+For my debugging purposes:
+$ make debug 
+
 
 Assumptions:
 1. All start and end tags have no spaces in them.
+2. Cost must be at least one
+
+Notes:
+1. I have no idea how to grab the token that broke the grammar =(

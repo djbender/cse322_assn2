@@ -1,7 +1,8 @@
 %{
 #include <stdio.h>
-void yyerror(char *);
 #include "y.tab.h"
+
+void yyerror(char *);
 %}
 
 %%
@@ -43,8 +44,8 @@ void yyerror(char *);
 [ \t\r\n]	   /* do nothing */ 
 
 .												{
-												printf("Invalid token: %s\n", yytext);
-												//return 0;
+												fprintf(stderr, "Invalid token: %s\n", yytext);
+												return 0;
 												}
 
 

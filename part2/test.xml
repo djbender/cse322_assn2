@@ -3,7 +3,7 @@
 	<- name = "lulz" ->
 	<piece>
 		<- shape = "curve" ->
-		<- quantity = "10" ->
+		<- quantity = "2" ->
 		<- size = "1" ->
 		<- cost = "3" ->
 	</piece>

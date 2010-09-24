@@ -2,8 +2,9 @@
 	<- name = "lulz" ->
 	<piece>
 		<- shape = "curve" ->
-		<- size = "2" ->
-		<- quantity = "2"->
+		<- size = "1" ->
+		<- quantity = "100"->
 		<- cost = "1" ->
 	</piece>
+	
 </track>
