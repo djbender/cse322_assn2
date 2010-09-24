@@ -5,9 +5,5 @@
 		<- size = "2" ->
 		<- quantity = "2"->
 		<- cost = "1" ->
-		<station>
-			<- kind = "police"->
-			<- location = "1" ->
-		</station>
 	</piece>
 </track>

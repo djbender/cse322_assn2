@@ -17,13 +17,22 @@ char * shape;
 int isJunction = 0;
 int isStation = 0;
 
+int curve_count = 0;
+
 %}
 
 %token STRACK SPIECE SSTATION ETRACK EPIECE ESTATION SATTR EATTR NAME SHAPE SIZE QUANTITY COST STRAIGHT CURVE JUNCTION KIND LOCATION EQUAL INTEGER Q STRING
 
 %%
 
-track: STRACK track_name pieces ETRACK  	{printf("\nTrack found!\n\n");}
+track: STRACK track_name pieces ETRACK  	{
+			printf("\t\ncurve_count: %i\n", curve_count);
+			if((curve_count <= 4) || (curve_count % 2 != 0)) {
+				yyerror("There must be at least four curves and it must be an even number.");
+				return 0;
+			}
+			printf("\nTrack found!\n\n");
+		}
 	|													{printf("Empty file!\n");}
 	;
 
@@ -103,7 +112,7 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 	;
 
 shape: Q STRAIGHT Q		{shape = "STRAIGHT";}
-	| Q CURVE Q				{shape = "CURVE";}
+	| Q CURVE Q				{shape = "CURVE"; curve_count++;}
 	| Q JUNCTION Q			{shape = "JUNCTION"; isJunction = 1;}
 	;
 
