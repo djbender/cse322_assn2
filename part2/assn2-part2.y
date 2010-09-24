@@ -18,7 +18,8 @@ int isJunction = 0;
 int isStation = 0;
 
 int curve_count = 0;
-
+int quantity_count = 0;
+int curr_quantity = 0;
 %}
 
 %token STRACK SPIECE SSTATION ETRACK EPIECE ESTATION SATTR EATTR NAME SHAPE SIZE QUANTITY COST STRAIGHT CURVE JUNCTION KIND LOCATION EQUAL INTEGER Q STRING
@@ -29,6 +30,10 @@ track: STRACK track_name pieces ETRACK  	{
 			printf("\t\ncurve_count: %i\n", curve_count);
 			if((curve_count <= 4) || (curve_count % 2 != 0)) {
 				yyerror("There must be at least four curves and it must be an even number.");
+				return 0;
+			}
+			if(quantity_count >= 100) {
+				yyerror("There must be less than 100 pieces.");
 				return 0;
 			}
 			printf("\nTrack found!\n\n");
@@ -74,6 +79,9 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 					return 0;
 				}
 			}
+			if (strcmp(shape,"CURVE")==0) { //strcmp returns 0 on TRUE
+				curve_count += curr_quantity;
+			}
 		}
 	|
 	;
@@ -99,6 +107,9 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 				yyerror("Piece's quantity must be at least 1.");
 				return 0;
 			}
+			curr_quantity = $4;
+			quantity_count += $4;
+			printf("\n\tquantity_count: %i, quantity just added: %i\n\n", quantity_count, $4); //DEBUG
 			quantity_c++;
 		}
 	| SATTR COST EQUAL integer EATTR				{
@@ -112,7 +123,7 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 	;
 
 shape: Q STRAIGHT Q		{shape = "STRAIGHT";}
-	| Q CURVE Q				{shape = "CURVE"; curve_count++;}
+	| Q CURVE Q				{shape = "CURVE";}
 	| Q JUNCTION Q			{shape = "JUNCTION"; isJunction = 1;}
 	;
 
