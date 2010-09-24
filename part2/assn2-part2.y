@@ -27,16 +27,16 @@ int curr_quantity = 0;
 %%
 
 track: STRACK track_name pieces ETRACK  	{
-			printf("\t\ncurve_count: %i\n", curve_count);
+			//printf("\t\ncurve_count: %i\n", curve_count); //DEBUG
 			if((curve_count <= 4) || (curve_count % 2 != 0)) {
-				yyerror("There must be at least four curves and it must be an even number.");
+				yyerror("Semantic: 4");
 				return 0;
 			}
 			if(quantity_count >= 100) {
-				yyerror("There must be less than 100 pieces.");
+				yyerror("Semantic: 5");
 				return 0;
 			}
-			printf("\nTrack found!\n\n");
+			printf("Success: %i track pieces collected\n", quantity_count);
 		}
 	|													{printf("Empty file!\n");}
 	;
@@ -54,9 +54,9 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 				cost_c = 0;
 				station_c = 0;
 			} else { 
-				yyerror("Piece Error:");
+				//yyerror("Piece Error:");
 				if(station_c > 1) {
-					yyerror("Station is greater than 1.");
+					yyerror("Syntax: Can only have one Station tag per piece");
 				} else {
 					yyerror("Piece didn't have one of each attribute.");
 				}
@@ -64,7 +64,7 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 			}
 			if ( isJunction ) {
 				if (size != 1) {
-					yyerror("Junction Piece's size is not 1.");
+					yyerror("Semantic: 2");
 					return 0;
 				} else {
 					size = 0;
@@ -74,7 +74,7 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 				if ( strcmp(shape, "STRAIGHT") == 0) {//strcmp returns 0 when equal
 					isStation = 0; //reset isStation
 				} else {
-					yyerror("Station not on a straight piece!");
+					yyerror("Semantic: 3");
 					//printf("shape: %s",shape);
 					return 0;
 				}
@@ -94,8 +94,8 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 			shape_c++;}
 	| SATTR SIZE EQUAL integer EATTR				{
 			if($4 < 1) {
-				printf("\n\tsize given: %i.\n\n", $4);
-				yyerror("Piece's quantity must be at least 1.");
+				//printf("\n\tsize given: %i.\n\n", $4); //DEBUG
+				yyerror("Semantic: 1");
 				return 0;
 			}
 			size = $4;
@@ -104,12 +104,12 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 	| SATTR QUANTITY EQUAL integer EATTR		{
 			if($4 < 1) {
 				printf("\n\tquantity given: %i.\n\n", $4);
-				yyerror("Piece's quantity must be at least 1.");
+				yyerror("Semantic: 1");
 				return 0;
 			}
 			curr_quantity = $4;
 			quantity_count += $4;
-			printf("\n\tquantity_count: %i, quantity just added: %i\n\n", quantity_count, $4); //DEBUG
+			//printf("\n\tquantity_count: %i, quantity just added: %i\n\n", quantity_count, $4); //DEBUG
 			quantity_c++;
 		}
 	| SATTR COST EQUAL integer EATTR				{
@@ -153,10 +153,11 @@ integer: Q INTEGER Q	{$$ = $2;}
 %%
 
 void yyerror(char *s){
-		printf("\n Syntax Error found: %s\n", s);
+		fprintf(stderr, "%s\n", s);
 }
 
 int main( void ) {
 	yydebug=1;
 	yyparse();
+	return 0;
 }
