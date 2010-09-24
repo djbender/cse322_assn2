@@ -1,15 +1,13 @@
 <track>
 	<- name = "lulz" ->
 	<piece>
-		<- shape = "junction" ->
-		<- quantity = "10" ->
+		<- shape = "curve" ->
 		<- size = "2" ->
-		<- cost = "3" ->
-	</piece>
-	<piece>
-		<- shape = "junction" ->
-		<- quantity = "10" ->
-		<- size = "1" ->
-		<- cost = "2" ->
+		<- quantity = "2"->
+		<- cost = "1" ->
+		<station>
+			<- kind = "police"->
+			<- location = "1" ->
+		</station>
 	</piece>
 </track>

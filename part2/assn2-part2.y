@@ -4,6 +4,8 @@
 int yylex(void);
 void yyerror(char *);
 
+int yydebug;
+
 int shape_c = 0;
 int size_c = 0;
 int quantity_c = 0;
@@ -13,6 +15,7 @@ int station_c = 0;
 int size = 0;
 char * shape;
 int isJunction = 0;
+int isStation = 0;
 
 %}
 
@@ -25,11 +28,11 @@ track: STRACK track_name pieces ETRACK  	{printf("\nTrack found!\n\n");}
 	;
 
 pieces: pieces SPIECE piece_attrs EPIECE  {
-		if(   (shape_c == 1) 
-			&& (size_c == 1) 
-			&& (quantity_c == 1) 
-			&& (cost_c == 1)
-			&& ((station_c == 1) || (station_c == 0))
+			if	(   (shape_c == 1) 
+				&& (size_c == 1) 
+				&& (quantity_c == 1) 
+				&& (cost_c == 1)
+				&& ((station_c == 1) || (station_c == 0))
 			) {
 				shape_c = 0;
 				size_c = 0;
@@ -39,18 +42,27 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 			} else { 
 				yyerror("Piece Error:");
 				if(station_c > 1) {
-					yyerror("Station is greater than 1\n");
+					yyerror("Station is greater than 1.");
 				} else {
-					yyerror("Piece didn't have one of each attribute\n");
+					yyerror("Piece didn't have one of each attribute.");
 				}
 				return 0;
 			}
 			if ( isJunction ) {
 				if (size != 1) {
-					yyerror("Junction Piece's size is not 1.\n");
+					yyerror("Junction Piece's size is not 1.");
 					return 0;
 				} else {
 					size = 0;
+				}
+			}
+			if (isStation){
+				if ( strcmp(shape, "STRAIGHT") == 0) {//strcmp returns 0 when equal
+					isStation = 0; //reset isStation
+				} else {
+					yyerror("Station not on a straight piece!");
+					//printf("shape: %s",shape);
+					return 0;
 				}
 			}
 		}
@@ -87,7 +99,7 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
 			}
 			cost_c++;
 		}
-	| station											{station_c++;}
+	| station											{station_c++; isStation = 1;}
 	;
 
 shape: Q STRAIGHT Q		{shape = "STRAIGHT";}
