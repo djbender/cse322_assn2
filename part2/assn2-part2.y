@@ -9,7 +9,10 @@ int size_c = 0;
 int quantity_c = 0;
 int cost_c = 0;
 int station_c = 0;
-char * shape = "";
+
+int size = 0;
+char * shape;
+int isJunction = 0;
 
 %}
 
@@ -42,24 +45,37 @@ pieces: pieces SPIECE piece_attrs EPIECE  {
 				}
 				return 0;
 			}
-		}
-	|
-	;
-
-piece_attrs: piece_attr piece_attrs {
-			if( strcmp(shape, "JUNCTION") && (size_c != 1)) {
-				yyerror("Size of Junction was not one.\n");
+			if ( isJunction ) {
+				if (size != 1) {
+					yyerror("Junction Piece's size is not 1.\n");
+					return 0;
+				} else {
+					size = 0;
+				}
 			}
 		}
 	|
 	;
 
-piece_attr:	SATTR SHAPE EQUAL shape EATTR	{shape_c++;}
-	| SATTR SIZE EQUAL integer EATTR				{size_c++;}
+piece_attrs: piece_attr piece_attrs {}
+	|
+	;
+
+piece_attr:	SATTR SHAPE EQUAL shape EATTR	{
+			shape_c++;}
+	| SATTR SIZE EQUAL integer EATTR				{
+			if($4 < 1) {
+				printf("\n\tsize given: %i.\n\n", $4);
+				yyerror("Piece's quantity must be at least 1.");
+				return 0;
+			}
+			size = $4;
+			size_c++;
+		}
 	| SATTR QUANTITY EQUAL integer EATTR		{
 			if($4 < 1) {
-				printf("quantity given: %i.\n", $4);
-				yyerror("Piece's quantity must be at least 1");
+				printf("\n\tquantity given: %i.\n\n", $4);
+				yyerror("Piece's quantity must be at least 1.");
 				return 0;
 			}
 			quantity_c++;
@@ -74,9 +90,9 @@ piece_attr:	SATTR SHAPE EQUAL shape EATTR	{shape_c++;}
 	| station											{station_c++;}
 	;
 
-shape: STRAIGHT		{shape = "STRAIGHT";}
-	| CURVE				{shape = "CURVE";}
-	| JUNCTION			{shape = "JUNCTION";}
+shape: Q STRAIGHT Q		{shape = "STRAIGHT";}
+	| Q CURVE Q				{shape = "CURVE";}
+	| Q JUNCTION Q			{shape = "JUNCTION"; isJunction = 1;}
 	;
 
 station: SSTATION station_attrs ESTATION
@@ -105,7 +121,7 @@ integer: Q INTEGER Q	{$$ = $2;}
 %%
 
 void yyerror(char *s){
-		printf("\n Syntax Error found: %i %s\n", __LINE__, s);
+		printf("\n Syntax Error found: %s\n", s);
 }
 
 int main( void ) {
