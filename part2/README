@@ -1,10 +1,17 @@
 Derek Bender
 
+Part1:
+$ lex assn2-part1.l 
+$ cc yy.lex.c -ll -o part1 
+$ ./part1
+
 Makefile included is for part 2:
 $ make
 $ make clean
 For my debugging purposes:
 $ make debug 
+Run executable:
+$ ./trains
 
 
 Assumptions:
